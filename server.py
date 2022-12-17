@@ -39,8 +39,7 @@ from socketserver import ThreadingMixIn
 #
 # Config
 
-# Sim params
-
+# Sim paramnpms
 REALTIME = True
 SIM_LENGTH = timedelta(days=365 * 5)
 MARKET_OPEN = datetime.today().replace(hour=0, minute=30, second=0)
@@ -85,7 +84,8 @@ def orders(hist):
         stock = 'ABC' if random() > 0.5 else 'DEF'
         side, d = ('sell', 2) if random() > 0.5 else ('buy', -2)
         order = round(normalvariate(px + (spd / d), spd / OVERLAP), 2)
-        size = int(abs(normalvariate(0, 100)))
+        size = int(abs(normalvariate(0, 100)))    """ Try to clear a sized order against a book, returning a tuple of
+        (notional, new_book) if successful, and None if not.  _notional is a
         yield t, stock, side, order, size
 
 
@@ -102,8 +102,7 @@ def add_book(book, order, size, _age=10):
 
 
 def clear_order(order, size, book, op=operator.ge, _notional=0):
-    """ Try to clear a sized order against a book, returning a tuple of
-        (notional, new_book) if successful, and None if not.  _notional is a
+
         recursive accumulator and should not be provided by the caller.
     """
     (top_order, top_size, age), tail = book[0], book[1:]
